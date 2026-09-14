@@ -59,7 +59,7 @@
 
           <div class="legend-row">
             <span class="legend-chip"><span class="legend-dot" style="background:#64b5f6"></span>P (fixed target)</span>
-            <span class="legend-chip"><span class="legend-dot" style="background:#4ade80"></span>Q(t) (interpolated)</span>
+            <span class="legend-chip"><span class="legend-dot" style="background:#4ade80"></span>Q (interpolated)</span>
           </div>
         </section>
 
@@ -77,7 +77,7 @@
           <div class="formula-box">
             <p>
               <span class="formula-label">LERP</span>
-              <span class="math">$\mu_Q(t)=(1-t)\mu_{Q_0}+t\,\mu_P,\quad \sigma_Q(t)=(1-t)\sigma_{Q_0}+t\,\sigma_P$</span>
+              <span class="math">$\mu_Q=(1-t)\mu_{Q_0}+t\,\mu_P,\quad \sigma_Q=(1-t)\sigma_{Q_0}+t\,\sigma_P$</span>
             </p>
             <p>
               <span class="formula-label">Entropy</span>
@@ -104,8 +104,8 @@
           <svg id="distPlot" viewBox="0 0 560 320" role="img" aria-label="Distribution space plot"></svg>
           <div class="stats-box">
             <p><span>t</span><strong id="tStat">—</strong></p>
-            <p><span>μ_Q(t)</span><strong id="muQStat">—</strong></p>
-            <p><span>σ_Q(t)</span><strong id="sigmaQStat">—</strong></p>
+            <p><span>μ_Q</span><strong id="muQStat">—</strong></p>
+            <p><span>σ_Q</span><strong id="sigmaQStat">—</strong></p>
           </div>
         </article>
 
