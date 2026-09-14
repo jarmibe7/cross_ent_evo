@@ -1,5 +1,5 @@
 # Cross-Entropy Evolution Visualizer
-Cross-Entropy and Kullback-Leibler Divergence evolve as a univariate Gaussian model Q interpolates toward a fixed target P.
+A visualization of how Cross-Entropy and Kullback-Leibler Divergence evolve as a univariate Gaussian model Q interpolates toward a fixed target P.
 
 The left chart shows both PDFs updating during the interpolation. The right chart plots Entropy H(P) as a static baseline alongside KL Divergence and Cross-Entropy as continuous functions of t, with a moving marker on each curve plus a vertical tracker line showing the current t.
 
