@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cross-Entropy Decomposition Visualizer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      MathJax = {
+        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Interactive demo</p>
+          <h1>Cross-Entropy Evolution Visualizer</h1>
+          <p class="subtitle">
+            Watch a Gaussian approximation Q interpolate toward a fixed target P, and watch how the
+            Cross-Entropy and Kullback-Leibler Divergence evolve.
+          </p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="controls-card">
+          <div class="controls-header">
+            <h2>Controls</h2>
+            <div class="button-row">
+              <button id="toggleButton" class="primary">Play</button>
+              <button id="resetButton">Reset</button>
+            </div>
+          </div>
+
+          <div class="control-strip">
+            <label class="control-block">
+              <span>Interpolation t</span>
+              <input id="tSlider" type="range" min="0" max="1" step="0.001" value="0" />
+              <strong id="tValue">0.000</strong>
+            </label>
+            <div class="control-block">
+              <span>Q starts (variance)</span>
+              <div class="button-row">
+                <button id="btnNarrow">Narrow</button>
+                <button id="btnWide" class="active">Wide</button>
+              </div>
+            </div>
+            <div class="control-block">
+              <span>Q starts (mean)</span>
+              <div class="button-row">
+                <button id="btnClose">Close</button>
+                <button id="btnFar" class="active">Far</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="legend-row">
+            <span class="legend-chip"><span class="legend-dot" style="background:#64b5f6"></span>P (fixed target)</span>
+            <span class="legend-chip"><span class="legend-dot" style="background:#4ade80"></span>Q(t) (interpolated)</span>
+          </div>
+        </section>
+
+        <section class="explainer-card">
+          <h2>What you are seeing</h2>
+          <p>
+            P (blue) is a fixed Gaussian target. Q (green) starts far from P and is linearly
+            interpolated toward it as the slider t moves from 0 to 1 (LERP).
+            <br /><br />
+            The left chart shows both PDFs updating during the interpolation. The right chart
+            plots Entropy H(P) as a static baseline alongside KL Divergence and Cross-Entropy as
+            continuous functions of t, with a moving marker on each curve plus a vertical
+            tracker line showing the current t.
+          </p>
+          <div class="formula-box">
+            <p>
+              <span class="formula-label">LERP</span>
+              <span class="math">$\mu_Q(t)=(1-t)\mu_{Q_0}+t\,\mu_P,\quad \sigma_Q(t)=(1-t)\sigma_{Q_0}+t\,\sigma_P$</span>
+            </p>
+            <p>
+              <span class="formula-label">Entropy</span>
+              <span class="math">$H(P)=\tfrac12\ln\!\big(2\pi e\,\sigma_P^2\big)$</span>
+            </p>
+            <p>
+              <span class="formula-label">KL Divergence</span>
+              <span class="math">$D_{KL}(P\|Q)=\ln\dfrac{\sigma_Q}{\sigma_P}+\dfrac{\sigma_P^2+(\mu_P-\mu_Q)^2}{2\sigma_Q^2}-\tfrac12$</span>
+            </p>
+            <p>
+              <span class="formula-label">Cross-Entropy</span>
+              <span class="math">$H(P,Q)=H(P)+D_{KL}(P\|Q)$</span>
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <section class="plots-grid" id="plotsGrid">
+        <article class="plot-card reverse-card">
+          <div class="plot-header">
+            <h3>Distribution Space</h3>
+            <span class="tag">$P(x),\,Q_t(x)$</span>
+          </div>
+          <svg id="distPlot" viewBox="0 0 560 320" role="img" aria-label="Distribution space plot"></svg>
+          <div class="stats-box">
+            <p><span>t</span><strong id="tStat">—</strong></p>
+            <p><span>μ_Q(t)</span><strong id="muQStat">—</strong></p>
+            <p><span>σ_Q(t)</span><strong id="sigmaQStat">—</strong></p>
+          </div>
+        </article>
+
+        <article class="plot-card forward-card">
+          <div class="plot-header">
+            <h3>Metric Space</h3>
+            <span class="tag">$H(P,Q_t)=H(P)+D_{KL}(P\|Q_t)$</span>
+          </div>
+          <svg id="metricPlot" viewBox="0 0 560 320" role="img" aria-label="Metric space plot"></svg>
+          <div class="stats-box">
+            <p><span>H(P)</span><strong id="entropyStat">—</strong></p>
+            <p><span>D_KL(P‖Q)</span><strong id="kldStat">—</strong></p>
+            <p><span>H(P,Q)</span><strong id="crossStat">—</strong></p>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
